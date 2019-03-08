@@ -208,6 +208,10 @@ grub_gui_container_t grub_gui_canvas_new (void);
 grub_gui_container_t grub_gui_vbox_new (void);
 grub_gui_container_t grub_gui_hbox_new (void);
 grub_gui_component_t grub_gui_label_new (void);
+// add for input view begin
+grub_gui_component_t grub_gui_label_ex_new (void);
+grub_gui_component_t grub_gui_edit_new (void);
+// add for input view end
 grub_gui_component_t grub_gui_image_new (void);
 grub_gui_component_t grub_gui_progress_bar_new (void);
 grub_gui_component_t grub_gui_list_new (void);

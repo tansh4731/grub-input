@@ -261,6 +261,9 @@ grub_normal_execute (const char *config, int nested, int batch)
 {
   grub_menu_t menu = 0;
   const char *prefix;
+  // add for input view begin
+  const char *input_enable;
+  // add for input view end
 
   if (! nested)
     {
@@ -281,10 +284,19 @@ grub_normal_execute (const char *config, int nested, int batch)
 
   grub_boot_time ("Executed config file");
 
-  if (! batch)
+  if (!batch)
+  {
+    // add for input view begin
+    input_enable = grub_env_get("input_enable");
+    if(grub_strtol(input_enable, 0, 10) != 0)
     {
-      if (menu && menu->size)
-	{
+      grub_boot_time("Entering input");
+      grub_show_input(nested);
+    }
+    // add for input view end
+
+    if (menu && menu->size)
+    {
 
 	  grub_boot_time ("Entering menu");
 	  grub_show_menu (menu, nested, 0);

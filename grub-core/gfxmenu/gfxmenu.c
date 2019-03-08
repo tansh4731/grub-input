@@ -141,10 +141,18 @@ GRUB_MOD_INIT (gfxmenu)
       }
 
   grub_gfxmenu_try_hook = grub_gfxmenu_try;
+  
+  // add for input view begin
+  grub_gfxinput_init();
+  // add for input view end
 }
 
 GRUB_MOD_FINI (gfxmenu)
 {
   grub_gfxmenu_view_destroy (cached_view);
   grub_gfxmenu_try_hook = NULL;
+  
+  // add for input view begin
+  grub_gfxinput_deinit();
+  // add for input view end
 }

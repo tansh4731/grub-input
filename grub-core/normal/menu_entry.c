@@ -27,6 +27,9 @@
 #include <grub/auth.h>
 #include <grub/i18n.h>
 #include <grub/charset.h>
+// add for input view begin
+#include <grub/input.h>
+// add for input view end
 
 enum update_mode
   {

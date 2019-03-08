@@ -115,6 +115,11 @@ grub_menu_text_register_instances (int entry, grub_menu_t menu, int nested);
 grub_err_t
 grub_show_menu (grub_menu_t menu, int nested, int autobooted);
 
+// add for input view begin
+grub_err_t
+grub_show_input(int nested);
+// add for input view end
+
 /* Defined in `handler.c'.  */
 void read_handler_list (void);
 void free_handler_list (void);

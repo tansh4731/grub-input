@@ -31,6 +31,9 @@
 #include <grub/gfxmenu_view.h>
 #include <grub/gui.h>
 #include <grub/color.h>
+// add for input view begin
+#include <grub/input.h>
+// add for input view end
 
 static grub_err_t
 parse_proportional_spec (const char *value, signed *abs, grub_fixed_signed_t *prop);
@@ -288,6 +291,13 @@ theme_set_string (grub_gfxmenu_view_t view,
       if (! view->title_text)
         return grub_errno;
     }
+  // add for input view begin
+  else if (! grub_strcmp ("edit-num", name))
+    {
+      g_input_edit_num = grub_strtol(value, 0, 10);
+      return grub_errno;
+    }
+  // add for input view end
   else
     {
       return grub_error (GRUB_ERR_BAD_ARGUMENT,
@@ -518,6 +528,16 @@ read_object (struct parsebuf *p, grub_gui_container_t parent)
     {
       component = grub_gui_label_new ();
     }
+  // add for input view begin
+  else if (grub_strcmp (name, "label_ex") == 0)
+    {
+      component = grub_gui_label_ex_new ();
+    }
+  else if (grub_strcmp (name, "edit") == 0)
+    {
+      component = grub_gui_edit_new ();
+    }
+  // add for input view end
   else if (grub_strcmp (name, "image") == 0)
     {
       component = grub_gui_image_new ();

@@ -10708,7 +10708,7 @@ gettext.marker: $(gettext_module_SOURCES) $(nodist_gettext_module_SOURCES)
 	grep 'MARKER' $@.new > $@; rm -f $@.new
 platform_PROGRAMS += gfxmenu.module
 MODULE_FILES += gfxmenu.module$(EXEEXT)
-gfxmenu_module_SOURCES  = gfxmenu/gfxmenu.c gfxmenu/view.c gfxmenu/font.c gfxmenu/icon_manager.c gfxmenu/theme_loader.c gfxmenu/widget-box.c gfxmenu/gui_canvas.c gfxmenu/gui_circular_progress.c gfxmenu/gui_box.c gfxmenu/gui_label.c gfxmenu/gui_list.c gfxmenu/gui_image.c gfxmenu/gui_progress_bar.c gfxmenu/gui_util.c gfxmenu/gui_string_util.c  ## platform sources
+gfxmenu_module_SOURCES  = gfxmenu/gfxmenu.c gfxmenu/view.c gfxmenu/font.c gfxmenu/icon_manager.c gfxmenu/theme_loader.c gfxmenu/widget-box.c gfxmenu/gui_canvas.c gfxmenu/gui_circular_progress.c gfxmenu/gui_box.c gfxmenu/gui_label.c gfxmenu/gui_list.c gfxmenu/gui_image.c gfxmenu/gui_progress_bar.c gfxmenu/gui_util.c gfxmenu/gui_string_util.c gfxmenu/gfxinput.c gfxmenu/gui_label_ex.c gfxmenu/gui_edit.c ## platform sources
 nodist_gfxmenu_module_SOURCES  =  ## platform nodist sources
 gfxmenu_module_LDADD  = 
 gfxmenu_module_CFLAGS  = $(AM_CFLAGS) $(CFLAGS_MODULE) 
@@ -14223,7 +14223,7 @@ mmap.marker: $(mmap_module_SOURCES) $(nodist_mmap_module_SOURCES)
 endif
 platform_PROGRAMS += normal.module
 MODULE_FILES += normal.module$(EXEEXT)
-normal_module_SOURCES  = normal/main.c normal/cmdline.c normal/dyncmd.c normal/auth.c normal/autofs.c normal/color.c normal/completion.c normal/datetime.c normal/menu.c normal/menu_entry.c normal/menu_text.c normal/misc.c normal/crypto.c normal/term.c normal/context.c normal/charset.c lib/getline.c script/main.c script/script.c script/execute.c script/function.c script/lexer.c script/argv.c commands/menuentry.c unidata.c  ## platform sources
+normal_module_SOURCES  = normal/main.c normal/cmdline.c normal/dyncmd.c normal/auth.c normal/autofs.c normal/color.c normal/completion.c normal/datetime.c normal/menu.c normal/input.c normal/menu_entry.c normal/menu_text.c normal/misc.c normal/crypto.c normal/term.c normal/context.c normal/charset.c lib/getline.c script/main.c script/script.c script/execute.c script/function.c script/lexer.c script/argv.c commands/menuentry.c unidata.c  ## platform sources
 nodist_normal_module_SOURCES  = grub_script.tab.c grub_script.yy.c grub_script.tab.h grub_script.yy.h  ## platform nodist sources
 normal_module_LDADD  = 
 normal_module_CFLAGS  = $(AM_CFLAGS) $(CFLAGS_MODULE) $(CFLAGS_POSIX) -Wno-redundant-decls 

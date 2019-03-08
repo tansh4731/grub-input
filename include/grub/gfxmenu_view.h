@@ -55,6 +55,12 @@ void
 grub_gfxmenu_view_redraw (grub_gfxmenu_view_t view,
 			  const grub_video_rect_t *region);
 
+// add for input view begin
+void grub_gfxmenu_redraw_input(void *view);
+void grub_gfxinput_init(void);
+void grub_gfxinput_deinit(void);
+// add for input view end
+
 void 
 grub_gfxmenu_clear_timeout (void *data);
 void 

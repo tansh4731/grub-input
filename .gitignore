@@ -3,6 +3,8 @@
 *.module
 *.marker
 
+grub-core/Makefile.in
+autom4te.cache
 .deps-util
 00_header
 10_linux

@@ -37,6 +37,9 @@
 #include <grub/gui_string_util.h>
 #include <grub/icon_manager.h>
 #include <grub/i18n.h>
+// add for input view begin
+#include <grub/input.h>
+// add for input view end
 
 static void
 init_terminal (grub_gfxmenu_view_t view);
@@ -257,6 +260,24 @@ update_menu_visit (grub_gui_component_t component,
       list->ops->set_view_info (list, view);
     }
 }
+
+// add for input view begin
+void grub_gfxmenu_redraw_input(void *data)
+{
+    grub_gfxmenu_view_t view = (grub_gfxmenu_view_t)data;
+
+    input_log("grub_gfxmenu_redraw_input\n");
+
+    grub_video_set_area_status(GRUB_VIDEO_AREA_DISABLED);
+    grub_gfxmenu_view_redraw(view, &view->screen);
+    grub_video_swap_buffers();
+    if (view->double_repaint)
+    {
+        grub_video_set_area_status(GRUB_VIDEO_AREA_DISABLED);
+        grub_gfxmenu_view_redraw(view, &view->screen);
+    }
+}
+// add for input view end
 
 /* Update any boot menu components with the current menu model and
    theme path.  */
