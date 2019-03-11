@@ -79,7 +79,6 @@ input_init(int nested)
             if (!grub_gfxinput_try_hook)
             {
                 grub_dl_load("gfxmenu");
-                grub_dl_load("xdjakey");
                 grub_print_error();
             }
             if (grub_gfxinput_try_hook)
