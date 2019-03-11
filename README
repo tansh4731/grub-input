@@ -1,20 +1,146 @@
-This is GRUB 2, the second version of the GRand Unified Bootloader.
-GRUB 2 is rewritten from scratch to make GNU GRUB cleaner, safer, more
-robust, more powerful, and more portable.
+项目源码：
 
-See the file NEWS for a description of recent changes to GRUB 2.
+1、下载grub源码
 
-See the file INSTALL for instructions on how to build and install the
-GRUB 2 data and program files.
+下载源码：http://www.gnu.org/software/grub/
 
-Please visit the official web page of GRUB 2, for more information.
-The URL is <http://www.gnu.org/software/grub/grub.html>.
+2、功能设计
 
-More extensive documentation is available in the Info manual,
-accessible using 'info grub' after building and installing GRUB 2.
+grub最初的设计，主要是实现启动引导功能，所以整个界面的设计都是围绕着menu模式实现的；但有时我们需要进行输入信息的交互，而不仅仅只是选择菜单，比如用户身份认证等；但原生的grub中，用户身份认证，只能通过命令行实现，对于普通用户来说，交互并不友好；该方案，就是在原生grub基础上，扩展出输入框，类似于图形界面中的编辑框。在menu主流程的基础上，扩展了一套input流程，cfg文件中可以进行开关配置。目前input流程是在menu之前。input认证通过后，会进入menu流程。input的UI大部分复用menu的控件。
 
-There are a number of important user-visible differences from the
-first version of GRUB, now known as GRUB Legacy. For a summary, please
-see:
+增加了theme_input.txt文件，用于input风格的配置；
 
-  info grub Introduction 'Changes from GRUB Legacy'
+增加了edit控件类型，可以通过theme文件进行添加和配置。
+
+输入框具备的功能如下：
+
+（1）输入框作为theme中的一个控件，与label一样，可以通过在theme.txt中配置，进行动态添加。
+
+（2）输入框基本功能，可以接收输入的字符，并且显示
+
+（3）password_char功能，可以设置显示为特定字符，如*
+
+（4）显示光标，可以设置方向和宽度
+
+（5）设置字体和颜色
+
+（6）设置提示语内容、字体和颜色（提示语为无输入时，所显示的内容）
+
+3、代码实现
+
+（1）增加gui_edit.c文件，实现编辑框功能；
+
+gui_edit主要是在gui_label基础上进行扩展，实现了动态显示字符、显示光标、显示提示语、绘制背景等功能。
+
+struct grub_gui_edit
+
+{
+
+struct grub_gui_component comp;
+
+grub_gui_container_t parent;
+
+grub_video_rect_t bounds;
+
+char *id;
+
+int index;
+
+int visible;
+
+char password_char;
+
+int padding_h; //字符与上下边框的距离
+
+int padding_v; //字符与左右边框的距离
+
+int cursor_size; //光标大小
+
+char *cursor_derect; //光标方向
+
+char *marked_words; //提示语
+
+grub_font_t font;
+
+grub_video_rgba_color_t color;
+
+grub_video_rgba_color_t marked_words_color;
+
+}
+
+（2）增加gui_label_ex.c，用于动态显示info和error信息
+
+id以$开头，$1表示显示info，$2表示显示error
+
+（3）paint流程：
+
+<1>绘制背景
+
+<2>显示输入的字符串
+
+<3>显示光标
+
+4、与menu.c功能类似，增加input.c，用于处理输入框界面的流程。
+
+4.1 主要的按键：
+
+（1）up、down、table在输入框之前进行切换
+
+（2）A-Z、a-z、0-9当前输入框输入的字符
+
+（3）ctrl+c调出console
+
+（4）backspace删除当前输入框输入的字符
+
+（5）enter业务处理
+
+4.2 绘制
+
+（1）当前输入框的绘制
+
+（2）error、info信息框的绘制
+
+（3）光标的绘制
+
+5、normal/main.c中总流程修改
+
+grub_normal_execute中，判断如果没有menu，则执行input流程。
+
+6、theme_input.txt中增加edit
+
++ edit {
+id = "edit1"
+index = 0
+top = 0
+left = 0
+width = 400
+height = 40
+text = "********"
+align = "left"
+font = "microhei Regular 30"
+color = "#000000"
+file = "label_background_no_text.png"
+visible = "true"
+
+#padding_h = 10
+#padding_v = 10
+cursor_size = 2
+cursor_derect = "vertical"
+marked_words = "用户名"
+marked_words_color = "#8F8F8F"
+}
+
+
+
++ label_ex {
+id = "$2"
+top = 50%+300
+left = 50%-150
+width = 300
+height = 100
+text = "error"
+align = "left"
+font = "microhei Regular 30"
+color = "#F00"
+visible = "true"
+}
